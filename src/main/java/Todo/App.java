@@ -4,16 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.sound.sampled.*;
-import java.io.File;
-
 
 public class App implements ActionListener {
+
     JFrame frame = new JFrame();
     JButton startButton = new JButton("Start");
     JButton stopButton = new JButton("Reset");
+    JButton addTaskButton = new JButton("ADD");
+    JTextField taskTextField = new JTextField("ADD your task here");
     JTextArea notesArea = new JTextArea();
     JLabel timeLabel = new JLabel();
+    JLabel taskLabel = new JLabel();
+    JButton deleteTaskButton = new JButton();
+
+
+    int taskCounter = 1;
+
     int elapsedTime = 0;
     int seconds = 0;
     int minutes = 0;
@@ -44,6 +50,9 @@ public class App implements ActionListener {
         timeLabel.setBorder(BorderFactory.createEtchedBorder(Color.green, Color.black));
         timeLabel.setOpaque(true);
         timeLabel.setHorizontalAlignment(JTextField.CENTER);
+        addTaskButton.setBounds(25, 250, 75, 25);
+        taskTextField.setBounds(100, 250, 250, 25);
+        taskLabel.setBounds(25, 275, 325, 25);
 
         notesArea.setBounds(25, 140, 325, 100);
 
@@ -55,15 +64,22 @@ public class App implements ActionListener {
         stopButton.setFont(new Font("Verdana", Font.PLAIN, 15));
         stopButton.setFocusable(false);
 
+        addTaskButton.setFocusable(false);
+        taskLabel.setBorder(BorderFactory.createEtchedBorder(Color.red, Color.black));
+
         startButton.addActionListener(this);
         stopButton.addActionListener(this);
+        addTaskButton.addActionListener(this);
 
+        frame.add(taskLabel);
         frame.add(timeLabel);
+        frame.add(taskTextField);
+        frame.add(addTaskButton);
         frame.add(notesArea);
         frame.add(startButton);
         frame.add(stopButton);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+        frame.setSize(400, 600);
         frame.setTitle("Conquest");
         frame.setLayout(null);
         frame.setVisible(true);
