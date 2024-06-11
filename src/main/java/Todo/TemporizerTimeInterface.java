@@ -1,14 +1,11 @@
 package Todo;
 
 public interface TemporizerTimeInterface {
-    public int getElapsedTime();
-    public void setElapsedTime(int elapsedTime);
+    public int getElapsedSecondsTime();
+    public void setElapsedSecondsTime(int elapsedSecondsTime);
 
     public void setTime(int seconds, int minutes, int hours);
-    public void updateTemporizerTime(int sumedTime);
-    public String getSecondsString();
-    public String getMinutesString();
-    public String getHoursString();
-    public void setTimeBasedOnElapsedTime();
+    public void updateTime(int sumedSeconds);
     public String getFullTimeString();
+    public void resetTime();
 }

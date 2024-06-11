@@ -4,13 +4,17 @@ public class TemporizerTime implements TemporizerTimeInterface {
     private int seconds = 0;
     private int minutes = 0;
     private int hours = 0;
-    private int elapsedTime = 0;
+    private int elapsedSecondsTime = 0;
 
-    public TemporizerTime(int seconds, int minutes, int hours, int elapsedTime) {
+    
+    public TemporizerTime(int elapsedSecondsTime) {
+        this.elapsedSecondsTime = elapsedSecondsTime;
+    }
+
+    public TemporizerTime(int seconds, int minutes, int hours) {
         this.seconds = seconds;
         this.minutes = minutes;
         this.hours = hours;
-        this.elapsedTime = elapsedTime;
     }
 
     public TemporizerTime() {
@@ -27,8 +31,9 @@ public class TemporizerTime implements TemporizerTimeInterface {
     public void setHours(int hours) {
         this.hours = hours;
     }
-    public void setElapsedTime(int elapsedTime) {
-        this.elapsedTime = elapsedTime;
+    public void setElapsedSecondsTime(int elapsedSecondsTime) {
+        this.elapsedSecondsTime = elapsedSecondsTime;
+        setTimeBasedOnElapsedSecondsTime();
     }
     public int getSeconds() {
         return seconds;
@@ -39,8 +44,8 @@ public class TemporizerTime implements TemporizerTimeInterface {
     public int getHours() {
         return hours;
     }
-    public int getElapsedTime() {
-        return elapsedTime;
+    public int getElapsedSecondsTime() {
+        return elapsedSecondsTime;
     }
 
 
@@ -50,9 +55,9 @@ public class TemporizerTime implements TemporizerTimeInterface {
         this.hours = hours;
     }
 
-    public void updateTemporizerTime(int sumedElapsedTime) {
-        elapsedTime += sumedElapsedTime;
-        setTimeBasedOnElapsedTime();
+    public void updateTime(int sumedSeconds) {
+        elapsedSecondsTime += sumedSeconds;
+        setTimeBasedOnElapsedSecondsTime();
     }
 
     public String getSecondsString() {
@@ -67,14 +72,21 @@ public class TemporizerTime implements TemporizerTimeInterface {
         return String.format("%02d", hours);
     }
 
-    public void setTimeBasedOnElapsedTime() {
-        hours = (elapsedTime / 3600000);
-        minutes = (elapsedTime/ 60000) % 60;
-        seconds = (elapsedTime/ 1000) % 60;
+    public void setTimeBasedOnElapsedSecondsTime() {
+        hours = (elapsedSecondsTime / 3600000);
+        minutes = (elapsedSecondsTime/ 60000) % 60;
+        seconds = (elapsedSecondsTime/ 1000) % 60;
     }
 
     public String getFullTimeString() {
         return getHoursString() + ":" + getMinutesString() + ":" + getSecondsString();
+    }
+
+    public void resetTime() {
+        elapsedSecondsTime = 0;
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
     }
 }
 
