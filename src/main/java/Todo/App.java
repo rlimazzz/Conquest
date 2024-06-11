@@ -25,7 +25,7 @@ public class App implements ActionListener {
 
     Timer timer = new Timer(1000, new ActionListener(){
         public void actionPerformed(ActionEvent e) {
-            time.updateTemporizerTime(1000);
+            time.updateTime(1000);
             timeLabel.setText(time.getFullTimeString());
         }
     });
@@ -90,10 +90,7 @@ public class App implements ActionListener {
             started = false;
             startButton.setText("Start");
             timer.stop();
-            time.setElapsedTime(0);
-            time.setSeconds(0);
-            time.setMinutes(0);
-            time.setHours(0);
+            time.resetTime();
             timeLabel.setText(time.getFullTimeString());
         }
     }
