@@ -20,31 +20,18 @@ public class App implements ActionListener {
 
     int taskCounter = 1;
 
-    int elapsedTime = 0;
-    int seconds = 0;
-    int minutes = 0;
-    int hours = 0;
+    TemporizerTime time = new TemporizerTime();
     boolean started = false;
-    String seconds_string = String.format("%02d", seconds);
-    String minutes_string = String.format("%02d", minutes);
-    String hours_string = String.format("%02d", hours);
 
     Timer timer = new Timer(1000, new ActionListener(){
         public void actionPerformed(ActionEvent e) {
-            elapsedTime += 1000;
-            hours = (elapsedTime / 3600000);
-            minutes = (elapsedTime/ 60000) % 60;
-            seconds = (elapsedTime/ 1000) % 60;
-            seconds_string = String.format("%02d", seconds);
-            minutes_string = String.format("%02d", minutes);
-            hours_string = String.format("%02d", hours);
-            timeLabel.setText(hours_string + ":" + minutes_string + ":" + seconds_string);
-
+            time.updateTemporizerTime(1000);
+            timeLabel.setText(time.getFullTimeString());
         }
     });
 
     public App() {
-        timeLabel.setText(hours_string + ":" + minutes_string + ":" + seconds_string);
+        timeLabel.setText(time.getFullTimeString());
         timeLabel.setBounds(25, 25, 200 , 100);
         timeLabel.setFont(new Font("Verdana", Font.PLAIN, 35));
         timeLabel.setBorder(BorderFactory.createEtchedBorder(Color.green, Color.black));
@@ -103,14 +90,11 @@ public class App implements ActionListener {
             started = false;
             startButton.setText("Start");
             timer.stop();
-            elapsedTime = 0;
-            seconds = 0;
-            minutes = 0;
-            hours = 0;
-            seconds_string = String.format("%02d", seconds);
-            minutes_string = String.format("%02d", minutes);
-            hours_string = String.format("%02d", hours);
-            timeLabel.setText(hours_string + ":" + minutes_string + ":" + seconds_string);
+            time.setElapsedTime(0);
+            time.setSeconds(0);
+            time.setMinutes(0);
+            time.setHours(0);
+            timeLabel.setText(time.getFullTimeString());
         }
     }
 
