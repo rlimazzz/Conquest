@@ -44,6 +44,16 @@ public class DateAdapter implements TemporizerTimeInterface {
         return zonedDateTime.format(dateTimeFormatter);
     }
 
+    public String getFullDateTime(LocalDateTime dateTime) {
+        int day = dateTime.getDayOfMonth();
+        int month = dateTime.getMonthValue();
+        int year = dateTime.getYear();
+        int hour = dateTime.getHour();
+        int minute = dateTime.getMinute();
+
+        return String.format("%02d/%02d/%04d %02d:%02d", day, month, year, hour, minute);
+    }
+
     public void resetTime() {
         startingInstant = adapteeClock.instant();
     }
