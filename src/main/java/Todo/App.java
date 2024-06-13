@@ -2,8 +2,6 @@ package Todo;
 
 import javax.swing.*;
 
-import javafx.concurrent.Task;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +35,7 @@ public class App implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             time.updateTime(1000);
             timeLabel.setText(time.getFullTimeString());
+            System.out.println(time.getElapsedSecondsTime());
             if (currentTask != null) {
                 currentTask.updateTimeSpent(Duration.ofMillis(1000));
                 taskList.repaint();
@@ -96,40 +95,6 @@ public class App implements ActionListener {
 
     }
 
-
-  /*   @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == startButton) {
-            timer.start();
-            if(!started) {
-                started = true;
-                startButton.setText("Stop");
-                dataHora = LocalDateTime.now();
-                adapter.getFullDateTimeString(dataHora);
-                System.out.println(adapter.getFullDateTimeString(dataHora));
-            }else {
-                started = false;
-                startButton.setText("Start");
-                timer.stop();
-            }
-        }
-        else if(e.getSource() == stopButton) {
-            started = false;
-            startButton.setText("Start");
-            timer.stop();
-            time.resetTime();
-            timeLabel.setText(time.getFullTimeString());
-        } else if (e.getSource() == addTaskButton) {
-            String task = taskTextField.getText();
-            if (!task.isEmpty() && !task.equals("ADD your task here")) {
-                taskListModel.addElement(task);
-                taskTextField.setText("");
-            }
-        }
-    }
- */
-
- 
  @Override
  public void actionPerformed(ActionEvent e) {
      if (e.getSource() == startButton) {
@@ -138,8 +103,7 @@ public class App implements ActionListener {
              started = true;
              startButton.setText("Stop");
              dataHora = LocalDateTime.now();
-             adapter.getFullDateTimeString(dataHora);
-             System.out.println(adapter.getFullDateTimeString(dataHora));
+             
              int selectedIndex = taskList.getSelectedIndex();
              if (selectedIndex != -1) {
                  currentTask = taskListModel.get(selectedIndex);
