@@ -44,12 +44,12 @@ public class DateAdapter implements TemporizerTimeInterface {
         return zonedDateTime.format(dateTimeFormatter);
     }
 
-    public String getFullDateTime(LocalDateTime dateTime) {
-        int day = dateTime.getDayOfMonth();
-        int month = dateTime.getMonthValue();
-        int year = dateTime.getYear();
-        int hour = dateTime.getHour();
-        int minute = dateTime.getMinute();
+    public String getFullDateTimeString(LocalDateTime dateTime) {
+        int day = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getDayOfMonth();
+        int month = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getMonthValue();
+        int year = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getYear();
+        int hour = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getHour();
+        int minute = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getMinute();
 
         return String.format("%02d/%02d/%04d %02d:%02d", day, month, year, hour, minute);
     }

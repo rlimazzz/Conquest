@@ -105,8 +105,8 @@ public class App implements ActionListener {
                 started = true;
                 startButton.setText("Stop");
                 dataHora = LocalDateTime.now();
-                adapter.getFullDateTime(dataHora);
-                System.out.println(adapter.getFullDateTime(dataHora));
+                adapter.getFullDateTimeString(dataHora);
+                System.out.println(adapter.getFullDateTimeString(dataHora));
             }else {
                 started = false;
                 startButton.setText("Start");
@@ -138,8 +138,8 @@ public class App implements ActionListener {
              started = true;
              startButton.setText("Stop");
              dataHora = LocalDateTime.now();
-             adapter.getFullDateTime(dataHora);
-             System.out.println(adapter.getFullDateTime(dataHora));
+             adapter.getFullDateTimeString(dataHora);
+             System.out.println(adapter.getFullDateTimeString(dataHora));
              int selectedIndex = taskList.getSelectedIndex();
              if (selectedIndex != -1) {
                  currentTask = taskListModel.get(selectedIndex);
