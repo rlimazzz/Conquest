@@ -1,9 +1,12 @@
 package Todo;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class App implements ActionListener {
 
@@ -16,35 +19,32 @@ public class App implements ActionListener {
     JLabel timeLabel = new JLabel();
     JLabel taskLabel = new JLabel();
     JButton deleteTaskButton = new JButton();
+    LocalDateTime dataHora;
+    DateAdapter adapter = new DateAdapter();
+    JList<Todo.Task> taskList;
+    DefaultListModel<Todo.Task> taskListModel;
 
 
     int taskCounter = 1;
 
-    int elapsedTime = 0;
-    int seconds = 0;
-    int minutes = 0;
-    int hours = 0;
+    TemporizerTime time = new TemporizerTime();
     boolean started = false;
-    String seconds_string = String.format("%02d", seconds);
-    String minutes_string = String.format("%02d", minutes);
-    String hours_string = String.format("%02d", hours);
+    Todo.Task currentTask = null;
 
-    Timer timer = new Timer(1000, new ActionListener(){
+    Timer timer = new Timer(1000, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            elapsedTime += 1000;
-            hours = (elapsedTime / 3600000);
-            minutes = (elapsedTime/ 60000) % 60;
-            seconds = (elapsedTime/ 1000) % 60;
-            seconds_string = String.format("%02d", seconds);
-            minutes_string = String.format("%02d", minutes);
-            hours_string = String.format("%02d", hours);
-            timeLabel.setText(hours_string + ":" + minutes_string + ":" + seconds_string);
-
+            time.updateTime(1000);
+            timeLabel.setText(time.getFullTimeString());
+            System.out.println(time.getElapsedSecondsTime());
+            if (currentTask != null) {
+                currentTask.updateTimeSpent(Duration.ofMillis(1000));
+                taskList.repaint();
+            }
         }
     });
 
     public App() {
-        timeLabel.setText(hours_string + ":" + minutes_string + ":" + seconds_string);
+        timeLabel.setText(time.getFullTimeString());
         timeLabel.setBounds(25, 25, 200 , 100);
         timeLabel.setFont(new Font("Verdana", Font.PLAIN, 35));
         timeLabel.setBorder(BorderFactory.createEtchedBorder(Color.green, Color.black));
@@ -71,11 +71,20 @@ public class App implements ActionListener {
         stopButton.addActionListener(this);
         addTaskButton.addActionListener(this);
 
+        
+        taskListModel = new DefaultListModel<>();
+
+        taskList = new JList<Todo.Task>(taskListModel);
+
+        JScrollPane taskScrollPane = new JScrollPane(taskList);
+        taskScrollPane.setBounds(25, 300, 325, 200);
+
         frame.add(taskLabel);
         frame.add(timeLabel);
         frame.add(taskTextField);
         frame.add(addTaskButton);
         frame.add(notesArea);
+        frame.add(taskScrollPane);
         frame.add(startButton);
         frame.add(stopButton);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,35 +92,44 @@ public class App implements ActionListener {
         frame.setTitle("Conquest");
         frame.setLayout(null);
         frame.setVisible(true);
+
     }
 
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == startButton) {
-            timer.start();
-            if(!started) {
-                started = true;
-                startButton.setText("Stop");
-            }else {
-                started = false;
-                startButton.setText("Start");
-                timer.stop();
-            }
-        }
-        else if(e.getSource() == stopButton) {
-            started = false;
-            startButton.setText("Start");
-            timer.stop();
-            elapsedTime = 0;
-            seconds = 0;
-            minutes = 0;
-            hours = 0;
-            seconds_string = String.format("%02d", seconds);
-            minutes_string = String.format("%02d", minutes);
-            hours_string = String.format("%02d", hours);
-            timeLabel.setText(hours_string + ":" + minutes_string + ":" + seconds_string);
-        }
-    }
-
+ @Override
+ public void actionPerformed(ActionEvent e) {
+     if (e.getSource() == startButton) {
+         timer.start();
+         if (!started) {
+             started = true;
+             startButton.setText("Stop");
+             dataHora = LocalDateTime.now();
+             
+             int selectedIndex = taskList.getSelectedIndex();
+             if (selectedIndex != -1) {
+                 currentTask = taskListModel.get(selectedIndex);
+                 currentTask.setStartTime(dataHora);
+             }
+         } else {
+             started = false;
+             startButton.setText("Start");
+             timer.stop();
+             if (currentTask != null) {
+                 currentTask = null;
+             }
+         }
+     } else if (e.getSource() == stopButton) {
+         started = false;
+         startButton.setText("Start");
+         timer.stop();
+         time.resetTime();
+         timeLabel.setText(time.getFullTimeString());
+     } else if (e.getSource() == addTaskButton) {
+         String taskDescription = taskTextField.getText();
+         if (!taskDescription.isEmpty() && !taskDescription.equals("ADD your task here")) {
+             Todo.Task newTask = new Todo.Task(taskDescription);
+             taskListModel.addElement(newTask);
+             taskTextField.setText("");
+         }
+     }
+ }
 }

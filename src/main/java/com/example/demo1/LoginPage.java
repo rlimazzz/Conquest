@@ -29,20 +29,20 @@ public class LoginPage implements ActionListener {
     LoginPage(HashMap<String, String> loginInfo) {
         logging = loginInfo;
 
-        //bounds to adjust our login menu
+        // bounds to adjust our login menu
         userIDLabel.setBounds(50, 100, 75, 25);
-        userPasswordLabel.setBounds(50, 150, 75 , 25);
-        messageLabel.setBounds(50, 25 , 350 , 75);
+        userPasswordLabel.setBounds(50, 150, 75, 25);
+        messageLabel.setBounds(50, 25, 350, 75);
         userIDField.setBounds(150, 100, 125, 25);
         userPasswordField.setBounds(150, 150, 125, 25);
         loginButton.setBounds(300, 100, 75, 25);
         signupButton.setBounds(300, 150, 75, 25);
 
-        //setting our actions
+        // setting our actions
         loginButton.addActionListener(this);
         signupButton.addActionListener(this);
 
-        //removing focus from buttons
+        // removing focus from buttons
         loginButton.setFocusable(false);
         signupButton.setFocusable(false);
 
@@ -63,25 +63,24 @@ public class LoginPage implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == loginButton) {
+        if (e.getSource() == loginButton) {
             String userID = userIDField.getText();
             String password = String.valueOf(userPasswordField.getPassword());
 
-            if(logging.containsKey(userID)){
-                if(logging.get(userID).equals(password)) {
+            if (logging.containsKey(userID)) {
+                if (logging.get(userID).equals(password)) {
                     messageLabel.setForeground(Color.green);
                     messageLabel.setText("Login successful");
 
                     App app = new App();
                     frame.dispose();
                 }
-            }else {
-              messageLabel.setForeground(Color.red);
-              messageLabel.setText("Username/password not correct");
+            } else {
+                messageLabel.setForeground(Color.red);
+                messageLabel.setText("Username/password not correct");
             }
-        }
-        else if(e.getSource() == signupButton) {
-            Signup signup= new Signup();
+        } else if (e.getSource() == signupButton) {
+            Signup signup = new Signup();
         }
     }
 }
