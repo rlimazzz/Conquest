@@ -36,7 +36,7 @@ public class LoginPage implements ActionListener {
         userIDField.setBounds(150, 100, 125, 25);
         userPasswordField.setBounds(150, 150, 125, 25);
         loginButton.setBounds(300, 100, 75, 25);
-        signupButton.setBounds(300, 150, 75, 25);
+        //signupButton.setBounds(300, 150, 75, 25);
 
         // setting our actions
         loginButton.addActionListener(this);
@@ -56,7 +56,7 @@ public class LoginPage implements ActionListener {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 300);
-        frame.setTitle("Conquest");
+        frame.setTitle("Pomodoro");
         frame.setLayout(null);
         frame.setVisible(true);
     }

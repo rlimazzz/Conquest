@@ -2,18 +2,14 @@ package Todo;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalField;
-import java.util.TimeZone;
 
 public class DateAdapter implements TemporizerTimeInterface {
     private Clock adapteeClock = Clock.systemDefaultZone();
     private Instant startingInstant;
 
-
     public DateAdapter() {
         startingInstant = adapteeClock.instant();
     }
-
 
     private int getInstantSecond(Instant instant) {
         return LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).getSecond();
@@ -45,21 +41,28 @@ public class DateAdapter implements TemporizerTimeInterface {
 
     public String getFullTimeString() {
         int elapsedSecondsTime = getElapsedSecondsTime();
-        int hours = (elapsedSecondsTime / 3600000);
-        int minutes = (elapsedSecondsTime/ 60000) % 60;
-        int seconds = (elapsedSecondsTime/ 1000) % 60;
+        long hours = (elapsedSecondsTime / 3600000);
+        long minutes = (elapsedSecondsTime / 60000) % 60;
+        long seconds = (elapsedSecondsTime / 1000) % 60;
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    public String getFullDateTimeString(LocalDateTime dateTime) {
-        int day = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getDayOfMonth();
-        int month = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getMonthValue();
-        int year = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getYear();
-        int hour = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getHour();
-        int minute = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getMinute();
-        int second = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault()).getSecond();
+    public String getFullTimeString(Duration time) {
+        long elapsedSecondsTime;
+        if (time != null) {
+            elapsedSecondsTime = time.toMillis();
+        } else {
+            elapsedSecondsTime = getElapsedSecondsTime();
+        }
+        long hours = (elapsedSecondsTime / 3600000);
+        long minutes = (elapsedSecondsTime / 60000) % 60;
+        long seconds = (elapsedSecondsTime / 1000) % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
 
-        return String.format("%02d/%02d/%04d %02d:%02d:%02d", day, month, year, hour, minute, second);
+    public String getFullDateTimeString() {
+        LocalDateTime dateTime = LocalDateTime.ofInstant(startingInstant, ZoneId.systemDefault());
+        return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
     }
 
     public void resetTime() {

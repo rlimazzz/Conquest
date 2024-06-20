@@ -1,12 +1,13 @@
 package Todo;
 
+import java.time.Duration;
+
 public class TemporizerTime implements TemporizerTimeInterface {
     private int seconds = 0;
     private int minutes = 0;
     private int hours = 0;
     private int elapsedSecondsTime = 0;
 
-    
     public TemporizerTime(int elapsedSecondsTime) {
         this.elapsedSecondsTime = elapsedSecondsTime;
     }
@@ -18,36 +19,41 @@ public class TemporizerTime implements TemporizerTimeInterface {
     }
 
     public TemporizerTime() {
-    
-    }
 
+    }
 
     public void setSeconds(int seconds) {
         this.seconds = seconds;
     }
+
     public void setMinutes(int minutes) {
         this.minutes = minutes;
     }
+
     public void setHours(int hours) {
         this.hours = hours;
     }
+
     public void setElapsedSecondsTime(int elapsedSecondsTime) {
         this.elapsedSecondsTime = elapsedSecondsTime;
         setTimeBasedOnElapsedSecondsTime();
     }
+
     public int getSeconds() {
         return seconds;
     }
+
     public int getMinutes() {
         return minutes;
     }
+
     public int getHours() {
         return hours;
     }
+
     public int getElapsedSecondsTime() {
         return elapsedSecondsTime;
     }
-
 
     public void setTime(int seconds, int minutes, int hours) {
         this.seconds = seconds;
@@ -74,8 +80,8 @@ public class TemporizerTime implements TemporizerTimeInterface {
 
     public void setTimeBasedOnElapsedSecondsTime() {
         hours = (elapsedSecondsTime / 3600000);
-        minutes = (elapsedSecondsTime/ 60000) % 60;
-        seconds = (elapsedSecondsTime/ 1000) % 60;
+        minutes = (elapsedSecondsTime / 60000) % 60;
+        seconds = (elapsedSecondsTime / 1000) % 60;
     }
 
     public String getFullTimeString() {
@@ -88,5 +94,15 @@ public class TemporizerTime implements TemporizerTimeInterface {
         minutes = 0;
         hours = 0;
     }
-}
 
+    public String getFullTimeString(Duration time) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFullTimeString'");
+    }
+
+    @Override
+    public String getFullDateTimeString() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFullDateTimeString'");
+    }
+}

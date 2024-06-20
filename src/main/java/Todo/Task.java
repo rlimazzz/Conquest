@@ -2,10 +2,9 @@ package Todo;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Task {
-     private String description;
+    private String description;
     private LocalDateTime startTime;
     private Duration timeSpent;
     DateAdapter adapter = new DateAdapter();
@@ -40,13 +39,10 @@ public class Task {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        String startTimeStr = (startTime != null) ? startTime.format(formatter) : "N/A";
-        String fullDateTime = adapter.getFullDateTimeString(startTime);
-        String timeSpentStr = String.format("%02d:%02d:%02d",
-                timeSpent.toHours(),
-                timeSpent.toMinutes() % 60,
-                timeSpent.getSeconds() % 60);
-        return String.format("%s (Start: %s, Spent: %s)", description, fullDateTime, timeSpentStr);
+        
+        String fullDateTime = adapter.getFullDateTimeString(/* startTime */);
+       
+        String timeSpentStr = adapter.getFullTimeString(timeSpent);
+        return String.format("%s (Início: %s, Tempo gasto: %s)", description, fullDateTime, timeSpentStr);
     }
 }
