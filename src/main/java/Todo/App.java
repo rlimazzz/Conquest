@@ -49,7 +49,7 @@ public class App implements ActionListener {
         addTaskButton.setBounds(25, 150, 75, 25);
         taskTextField.setBounds(100, 150, 250, 25);
 
-        //notesArea.setBounds(25, 140, 325, 100);
+        // notesArea.setBounds(25, 140, 325, 100);
 
         startButton.setBounds(250, 25, 100, 50);
         startButton.setFont(new Font("Verdana", Font.PLAIN, 15));
@@ -97,17 +97,21 @@ public class App implements ActionListener {
                 dataHora = LocalDateTime.now();
 
                 int selectedIndex = taskList.getSelectedIndex();
+
                 if (selectedIndex != -1) {
                     currentTask = taskListModel.get(selectedIndex);
                     currentTask.setStartTime(dataHora);
                 }
+
             } else {
                 started = false;
                 startButton.setText("Start");
                 timer.stop();
+
                 if (currentTask != null) {
                     currentTask = null;
                 }
+
             }
         } else if (e.getSource() == stopButton) {
             started = false;

@@ -40,7 +40,7 @@ public class Task {
     @Override
     public String toString() {
         
-        String fullDateTime = adapter.getFullDateTimeString(/* startTime */);
+        String fullDateTime = adapter.getFullDateTimeString();
        
         String timeSpentStr = adapter.getFullTimeString(timeSpent);
         return String.format("%s (Início: %s, Tempo gasto: %s)", description, fullDateTime, timeSpentStr);
